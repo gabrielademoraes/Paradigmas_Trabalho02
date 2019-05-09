@@ -20,13 +20,15 @@ loopJogo:-
     write(PalpiteLista), nl,
     listing(palpite), nl,
     conferePalpite(PalpiteLista, StrSenha),nl,
-    finalizaLoop(0),
-    !.
+    finalizaLoop(3).
 
 conferePalpite(PalpiteLista, StrSenha):-    
-    ifThenElse(PalpiteLista = StrSenha, write('Parabéns, você ganhou'), 
+    ifThenElse(PalpiteLista = StrSenha, retornaMenu, 
     conferePinos(PalpiteLista,StrSenha)).
 
+retornaMenu():-
+    write('Parabéns, você ganhou'),nl,nl,
+    consult('menu.pl'), menu.
 
 conferePinos(PalpiteLista,StrSenha):-
     PalpiteLista = [Palpite1|Palpites],
@@ -79,6 +81,6 @@ ifThenElse(_, _, Z) :- Z.
 
 aumentaContador(Contador):- Contador is Contador+1.
 
-finalizaLoop(3):- write('Todas as tentativas se esgotaram, você perdeu'), !.
+finalizaLoop(3):- write('Todas as tentativas se esgotaram, você perdeu'), nl, nl, retornaMenu, !.
 
 

@@ -8,7 +8,7 @@
     Escolha==0,
     !.
 
-operacaoMenu(0):- !.
-operacaoMenu(1):- write('Jogar'), consult('funcoesJogo.pl'), loopJogo, nl, !.
+operacaoMenu(0):- halt(0).
+operacaoMenu(1):- consult('funcoesJogo.pl'), loopJogo, nl, !.
 operacaoMenu(2):- consult('regras.pl'), regras ,nl, !.
 operacaoMenu(_):- write('Opção Inválida! Tente novamente'), nl, !.
