@@ -9,6 +9,6 @@ jogar:- repeat,
     !.
 
 operacaoMenu(0):- !.
-operacaoMenu(1):- write('Jogar'), consult('funcoesJogo.pl'), sortearSenha, nl, !.
+operacaoMenu(1):- write('Jogar'), consult('funcoesJogo.pl'), loopJogo, nl, !.
 operacaoMenu(2):- write('Opção B'), nl, !.
 operacaoMenu(_):- write('Opção Inválida! Tente novamente'), nl, !.
