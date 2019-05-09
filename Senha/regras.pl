@@ -1,3 +1,12 @@
+leArquivos(Regras, []) :-
+    at_end_of_stream(Regras).
+
+leArquivoRegras(Regras, [Cabeca|Cauda]):-
+    \+ at_end_of_stream(Regras),
+    read(Regras, Cabeca),
+    write(Cabeca), nl,
+    leArquivoRegras(Regras, Cauda).
+/*
 regras:-
     nl,
     write('=============== Objetivo ==============='),nl,
@@ -9,3 +18,4 @@ regras:-
     write('4 - O jogo possui um total de 10 rodadas.'),nl,
     write('5 - A senha não possui cores repetidas.'),nl,nl,
 !.
+*/

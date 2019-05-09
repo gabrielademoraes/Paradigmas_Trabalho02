@@ -1,14 +1,15 @@
-    menu:- repeat,
+menu:- repeat, nl,
     write('=============== Jogo Senha ==================='), nl,
     write('1. Jogar'), nl,
     write('2. Regras'), nl,
-    write('0. Sair'), nl,
+    write('0. Sair'), nl,nl,
     read(Escolha),
     operacaoMenu(Escolha),
     Escolha==0,
     !.
 
-operacaoMenu(0):- !.
-operacaoMenu(1):- write('Jogar'), consult('funcoesJogo.pl'), loopJogo, nl, !.
-operacaoMenu(2):- consult('regras.pl'), regras ,nl, !.
-operacaoMenu(_):- write('Opção Inválida! Tente novamente'), nl, !.
+operacaoMenu(0):- nl, write('Encerrando programa...'), !.
+operacaoMenu(1):- consult('funcoesJogo.pl'), loopJogo, nl, !.
+operacaoMenu(2):- open('regras.txt', read, Regras), consult('regras.pl'), leArquivoRegras(Regras, Linhas), close(Regras), nl, nl, !.
+% consult('regras.pl'), regras ,nl, !.
+operacaoMenu(_):- nl, write('Opção Inválida! Tente novamente'), nl, !.
