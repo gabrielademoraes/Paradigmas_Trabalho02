@@ -1,4 +1,4 @@
-menu:- repeat,
+    menu:- repeat,
     write('=============== Jogo Senha ==================='), nl,
     write('1. Jogar'), nl,
     write('2. Regras'), nl,
@@ -10,5 +10,5 @@ menu:- repeat,
 
 operacaoMenu(0):- !.
 operacaoMenu(1):- write('Jogar'), consult('funcoesJogo.pl'), loopJogo, nl, !.
-operacaoMenu(2):- write('Opção B'), nl, !.
+operacaoMenu(2):- consult('regras.pl'), regras ,nl, !.
 operacaoMenu(_):- write('Opção Inválida! Tente novamente'), nl, !.
