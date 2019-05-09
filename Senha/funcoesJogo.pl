@@ -11,10 +11,10 @@ cor(7, amarelo).
 
 loopJogo:- 
     randseq(4, 7, Senha),
-    write(Senha),nl,
+    %write(Senha),nl,
     converteNumeroStr(Senha, StrSenha),
     write(StrSenha), nl,nl,
-    write('Senha gerada com sucesso! Vamos começar...'),nl,
+    write('Senha gerada com sucesso! Vamos começar...'),nl, nl,
     repeat,
     recebePalpite(PalpiteLista),
     write(PalpiteLista), nl,
@@ -26,8 +26,12 @@ conferePalpite(PalpiteLista, StrSenha):-
     ifThenElse(PalpiteLista = StrSenha, retornaMenu, 
     conferePinos(PalpiteLista,StrSenha)).
 
-retornaMenu():-
+retornaMenuGanhou:-
     write('Parabéns, você ganhou'),nl,nl,
+    consult('menu.pl'), menu.
+
+retornaMenuPerdeu:-
+    write('Todas as tentativas se esgotaram, você perdeu'), nl, nl, 
     consult('menu.pl'), menu.
 
 conferePinos(PalpiteLista,StrSenha):-
@@ -41,29 +45,44 @@ conferePinos(PalpiteLista,StrSenha):-
     Senhas2      = [Senha3|Senhas3],
     Senhas3      = [Senha4|_],
 
-    ifThenElse(Palpite1 = Senha1, write('Pino Preto'), 
-    ifThenElse(existeElemento(Palpite1, StrSenha), write('Pino Branco'), write('Sem Pino'))),nl,
+    ifThenElse(Palpite1 = Senha1, write('  Pino Preto'), 
+    ifThenElse(existeElemento(Palpite1, StrSenha), write('  Pino Branco'), write(' Sem Pino'))),
     
-    ifThenElse(Palpite2 = Senha2, write('Pino Preto'),
-    ifThenElse(existeElemento(Palpite2, StrSenha), write('Pino Branco'), write('Sem Pino'))),nl,
+    ifThenElse(Palpite2 = Senha2, write(' | Pino Preto'),
+    ifThenElse(existeElemento(Palpite2, StrSenha), write('| Pino Branco'), write('| Sem Pino'))),nl,
     
-    ifThenElse(Palpite3 = Senha3, write('Pino Preto'),
-    ifThenElse(existeElemento(Palpite3, StrSenha), write('Pino Branco'), write('Sem Pino'))),nl,
+    write('  ------------------------'), nl,
+    ifThenElse(Palpite3 = Senha3, write('  Pino Preto'),
+    ifThenElse(existeElemento(Palpite3, StrSenha), write('  Pino Branco'), write('  Sem Pino'))),
 
-    ifThenElse(Palpite4 = Senha4, write('Pino Preto'),
-    ifThenElse(existeElemento(Palpite4, StrSenha), write('Pino Branco'), write('Sem Pino'))),nl.
+    ifThenElse(Palpite4 = Senha4, write(' | Pino Preto'),
+    ifThenElse(existeElemento(Palpite4, StrSenha), write('| Pino Branco'), write('| Sem Pino'))),nl.
 
 
 recebePalpite(PalpiteLista):-
     write('Cores possíveis: vermelho, verde, azul, roxo, rosa, laranja e amarelo'),nl, nl,
-    write('Formato da senha'), nl,
-    write('1° cor | 2° cor | 3° cor | 4° cor'), nl,nl,nl,
+    write('----------------------------------------'), nl,
+    write('|            Formato da senha            |'), nl, nl,
+    write('|    1° cor | 2° cor | 3° cor | 4° cor   |'), nl, 
+    write('----------------------------------------'),nl,nl,nl,
+    write('1° cor | 2° cor | 3° cor | 4° cor'),nl,
+    write('  ^'),nl,
+    write('  |'), nl,nl,
     write('Insira a 1° cor: '), nl,
     read(Palpite1),
+    nl, write('1° cor | 2° cor | 3° cor | 4° cor'),nl,
+    write('           ^'),nl,
+    write('           |'), nl,nl,
     write('Insira a 2° cor: '), nl,
     read(Palpite2),
+    nl, write('1° cor | 2° cor | 3° cor | 4° cor'),nl,
+    write('                    ^'),nl,
+    write('                    |'), nl,nl,
     write('Insira a 3° cor: '), nl,
     read(Palpite3),
+    nl, write('1° cor | 2° cor | 3° cor | 4° cor'),nl,
+    write('                             ^'),nl,
+    write('                             |'), nl,nl,
     write('Insira a 4° cor: '), nl,
     read(Palpite4),
     append([Palpite1, Palpite2], [Palpite3, Palpite4], PalpiteLista),
@@ -81,6 +100,6 @@ ifThenElse(_, _, Z) :- Z.
 
 aumentaContador(Contador):- Contador is Contador+1.
 
-finalizaLoop(3):- write('Todas as tentativas se esgotaram, você perdeu'), nl, nl, retornaMenu, !.
+finalizaLoop(3):- retornaMenuPerdeu, !.
 
 
