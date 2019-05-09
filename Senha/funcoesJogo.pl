@@ -8,31 +8,26 @@ cor(4, roxo).
 cor(5, rosa).
 cor(6, laranja).
 cor(7, amarelo).
+palpite(a,a,a,a).
 
-loopJogo:- 
+preparaJogo:- 
     randseq(4, 7, Senha),
-    %write(Senha),nl,
+    retractall(palpite(_,_,_,_)),
     converteNumeroStr(Senha, StrSenha),
-    write(StrSenha), nl,nl,
     write('Senha gerada com sucesso! Vamos começar...'),nl, nl,
-    repeat,
-    recebePalpite(PalpiteLista),
-    write(PalpiteLista), nl,
+    loopJogo(StrSenha).
+    
+
+loopJogo(StrSenha):- repeat, 
+    seq(1,10,Index),
+    recebePalpite(PalpiteLista,Index),
     listing(palpite), nl,
     conferePalpite(PalpiteLista, StrSenha),nl,
-    finalizaLoop(3).
+    finalizaLoop(Index, StrSenha).
 
 conferePalpite(PalpiteLista, StrSenha):-    
-    ifThenElse(PalpiteLista = StrSenha, retornaMenu, 
+    ifThenElse(PalpiteLista = StrSenha, retornaMenuGanhou, 
     conferePinos(PalpiteLista,StrSenha)).
-
-retornaMenuGanhou:-
-    write('Parabéns, você ganhou'),nl,nl,
-    consult('menu.pl'), menu.
-
-retornaMenuPerdeu:-
-    write('Todas as tentativas se esgotaram, você perdeu'), nl, nl, 
-    consult('menu.pl'), menu.
 
 conferePinos(PalpiteLista,StrSenha):-
     PalpiteLista = [Palpite1|Palpites],
@@ -53,13 +48,15 @@ conferePinos(PalpiteLista,StrSenha):-
     
     write('  ------------------------'), nl,
     ifThenElse(Palpite3 = Senha3, write('  Pino Preto'),
-    ifThenElse(existeElemento(Palpite3, StrSenha), write('  Pino Branco'), write('  Sem Pino'))),
+    ifThenElse(existeElemento(Palpite3, StrSenha), write('  Pino Branco'), write(' Sem Pino'))),
 
     ifThenElse(Palpite4 = Senha4, write(' | Pino Preto'),
     ifThenElse(existeElemento(Palpite4, StrSenha), write('| Pino Branco'), write('| Sem Pino'))),nl.
 
 
-recebePalpite(PalpiteLista):-
+recebePalpite(PalpiteLista,Index):-
+    write('Tentativa '),
+    write(Index),nl,nl,
     write('Cores possíveis: vermelho, verde, azul, roxo, rosa, laranja e amarelo'),nl, nl,
     write('----------------------------------------'), nl,
     write('|            Formato da senha            |'), nl, nl,
@@ -98,8 +95,19 @@ existeElemento(X, [ _ | L ]) :- existeElemento(X, L).
 ifThenElse(X, Y, _) :- X, !, Y.
 ifThenElse(_, _, Z) :- Z.
 
-aumentaContador(Contador):- Contador is Contador+1.
+finalizaLoop(10, StrSenha):- retornaMenuPerdeu(StrSenha), !.
 
-finalizaLoop(3):- retornaMenuPerdeu, !.
+seq(From,_,From).
+seq(From,To,X) :-
+    From<To,
+    Next is From+1,
+    seq(Next,To,X).
 
+retornaMenuGanhou:-
+    write('Parabéns, você ganhou!!!!!!!'),nl,nl,
+    consult('menu.pl'), menu.
 
+retornaMenuPerdeu(StrSenha):-
+    write('Todas as tentativas se esgotaram, você perdeu!'),nl,
+    write('A senha era:'), write(StrSenha), nl, nl, 
+    consult('menu.pl'), menu.

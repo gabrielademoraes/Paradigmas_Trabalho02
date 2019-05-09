@@ -9,6 +9,6 @@ menu:- repeat, nl,
     !.
 
 operacaoMenu(0):- nl, write('Encerrando programa...'), halt(0).
-operacaoMenu(1):- consult('funcoesJogo.pl'), loopJogo, nl, !.
+operacaoMenu(1):- consult('funcoesJogo.pl'), preparaJogo, nl, !.
 operacaoMenu(2):- open('regras.txt', read, Regras), consult('regras.pl'), leArquivoRegras(Regras, Linhas), close(Regras), nl, nl, !.
 operacaoMenu(_):- nl, write('Opção Inválida! Tente novamente'), nl, !.
