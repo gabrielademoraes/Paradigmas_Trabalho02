@@ -1,4 +1,4 @@
-jogar:- repeat,
+menu:- repeat,
     write('=============== Jogo Senha ==================='), nl,
     write('1. Jogar'), nl,
     write('2. Regras'), nl,
