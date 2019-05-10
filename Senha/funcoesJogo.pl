@@ -1,5 +1,4 @@
 :- dynamic palpite/4.
-:- dynamic senha/4.
 
 cor(1, vermelho).
 cor(2, verde).
